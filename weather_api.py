@@ -12,16 +12,17 @@ def get_weather_api(city):
         city_name = data["name"]
         weather_desc = data["weather"][0]["description"]
         icon = data['weather'][0]['icon']
+        link = f"https://openweathermap.org/img/wn/{icon}@2x.png"
         temp = data['main']['temp']
         feel_like = data['main']['feels_like']
         wind_speed = data['wind']['speed']
         wind_deg = data['wind']['deg']
         wind_direction = get_wind_direction(wind_deg)
-        data = {'suc': True, 'icon': icon, 'city': city_name, 'desc': weather_desc, 'temp': temp,
-                'feel_like': feel_like, 'wind_speed': wind_speed, 'wind_direction': wind_direction}
-        return data
+        weather = [f'В городе {city_name} сейчас {weather_desc}!\nТемпература: <b>{temp} °C</b>, чувствуется как <b>{feel_like} °C</b>.\nВетер <b>{wind_direction}</b>, <b>{wind_speed}</b> метров в секунду.', link] #<img src="https://openweathermap.org/img/wn/{icon}@2x.png"></img>
+
+        return weather
     except Exception as ex:
         print('Произошла ошибка: ' + str(ex))
-        data = {'suc': False}
-        return data
+        weather = None
+        return weather
 
