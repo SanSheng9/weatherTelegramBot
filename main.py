@@ -1,10 +1,12 @@
-import telebot
-from weather_api import get_weather_api
-from telebot import types
 import time
 
-bot = telebot.TeleBot('5891154215:AAEc37wi9CZjsq5NGnC73MHVC7M9vugvdjs')
+import telebot
+from telebot import types
+from token_api import TOKEN
+from weather_api import get_weather_api
 
+# telegram token
+bot = telebot.TeleBot(TOKEN)
 
 # The starting message of the bot || Стартовое сообщение бота
 @bot.message_handler(commands=['start'])
@@ -12,6 +14,7 @@ def start(message):
     smile_message = "⛅️"
     first_name = message.from_user.first_name
     last_name = message.from_user.last_name if message.from_user.last_name is not None else ''
+    print(first_name, last_name)
     start_message = f'Привет, <b>{first_name} {last_name}</b>. \nБот <b>Smokie</b> будет показывать погоду на каждый день!'
     bot.send_message(message.chat.id, smile_message, parse_mode='html')
     bot.send_message(message.chat.id, start_message, parse_mode='html')
